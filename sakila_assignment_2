@@ -1,0 +1,90 @@
+
+------------------------------------Q1------------------------------------
+SELECT count(*) 
+FROM film f
+JOIN film_category 
+ USING(film_id)
+JOIN category cat
+ USING(category_id)
+WHERE cat.name= 'documentary' AND f.special_features LIKE '%deleted scenes%'
+
+
+
+
+
+
+-----------------------------------Q2-----------------------------------------
+SELECT *
+FROM rental
+JOIN inventory 
+ USING(inventory_id)
+JOIN film f
+	USING (film_id)
+JOIN film_category 
+ USING(film_id)
+JOIN category cat
+	USING (category_id)
+JOIN staff s
+	USING (staff_id)
+
+WHERE cat.name = 'sci-fi' AND s.first_name ='Jon' AND s.last_name='Stephens'
+
+
+
+
+
+
+
+
+----------------------------------Q3-----------------------------
+SELECT sum(payment.amount)
+FROM rental
+JOIN inventory 
+ USING(inventory_id)
+JOIN film f
+	USING (film_id)
+JOIN film_category 
+ USING(film_id)
+JOIN category cat
+	USING (category_id)
+JOIN payment
+	USING (rental_id)
+
+WHERE cat.name = 'animation' 
+
+
+
+
+
+
+---------------------------------Q4-------------------------
+SELECT cat.name,count(*) AS rented
+FROM rental
+JOIN inventory 
+ USING(inventory_id)
+JOIN film f
+	USING (film_id)
+JOIN film_category 
+ USING(film_id)
+JOIN category cat
+	USING (category_id)
+JOIN customer c
+	USING (customer_id)
+WHERE c.first_name='PATRICIA' AND c.last_name='JOHNSON'
+GROUP BY cat.name
+ORDER BY rented DESC
+LIMIT 3;
+
+
+
+
+------------------------------Q4----------------------------------
+SELECT count(f.rating)  
+ FROM film f
+ JOIN inventory
+	USING (film_id)
+ JOIN rental 
+	USING (inventory_id)
+ JOIN customer
+	USING (customer_id)
+WHERE customer.first_name='SUSAN' AND customer.last_name='WILSON' AND f.rating='R';
